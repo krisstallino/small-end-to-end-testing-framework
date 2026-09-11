@@ -101,4 +101,18 @@ test.describe('Purchase journey', () => {
       await expect(shop.checkout.cartBadge).toHaveCount(0);
     });
   });
+
+  test('does not let an empty cart proceed to checkout', async ({ shop, page }) => {
+    test.fail(true, 'Known bug: the shop accepts a checkout for an empty cart');
+
+    await openCart(shop);
+
+    await test.step('Cart is empty', async () => {
+      await expect(shop.cart.items).toHaveCount(0);
+    });
+
+    await startCheckout(shop);
+
+    await expect(page).toHaveURL(/cart\.html$/);
+  });
 });

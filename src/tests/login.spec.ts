@@ -46,7 +46,7 @@ test.describe('Login rejection', () => {
       await expect(shop.login.errorContainer).toBeVisible();
       await expect(shop.login.errorMessage).toBeVisible();
       await expect(shop.login.erroredInputs).toHaveCount(2);
-      await expect(page).toHaveURL(/\/$/);
+      await expect(page).toHaveURL(shop.login.path);
 
       await expect(shop.login.errorMessage).toHaveText(expectedError);
     });
