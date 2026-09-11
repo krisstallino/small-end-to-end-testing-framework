@@ -10,6 +10,7 @@
     "postinstall": "playwright install chromium",
     "test": "playwright test --project=chromium",
     "test:all-browsers": "playwright install firefox webkit && playwright test",
+    "test:trace": "playwright test --project=chromium --trace on",
     "report": "playwright show-report",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
