@@ -8,6 +8,8 @@ export interface Credentials {
 export const USERS = {
   standard: { username: env.standardUser, password: env.password },
   lockedOut: { username: env.lockedOutUser, password: env.password },
+  problem: { username: env.problemUser, password: env.password },
+  error: { username: env.errorUser, password: env.password },
 } as const satisfies Record<string, Credentials>;
 
 export const INVALID_CREDENTIALS = {
