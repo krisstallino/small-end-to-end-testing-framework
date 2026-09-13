@@ -52,7 +52,7 @@ Specs                orchestration + every assertion
 
 These map onto the ISTQB generic test automation architecture (gTAA): POMs and business
 functions are the adaptation layer, `test-data/` the definition layer, fixtures and config the
-execution layer. 
+execution layer.
 
 ## Known defects, pinned as expected failures
 
