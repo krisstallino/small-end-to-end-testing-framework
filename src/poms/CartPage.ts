@@ -20,8 +20,4 @@ export class CartPage extends BasePage {
     this.itemQuantities = page.getByTestId('item-quantity');
     this.checkoutButton = page.getByTestId('checkout');
   }
-
-  removeButton(slug: string): Locator {
-    return this.page.getByTestId(`remove-${slug}`);
-  }
 }
