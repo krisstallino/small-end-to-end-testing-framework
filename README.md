@@ -54,6 +54,16 @@ These map onto the ISTQB generic test automation architecture (gTAA): POMs and b
 functions are the adaptation layer, `test-data/` the definition layer, fixtures and config the
 execution layer.
 
+## Rules for contributors and AI agents
+
+[AGENTS.md](AGENTS.md) is the rulebook: the three-layer boundaries, what may and may not hold
+`expect`, how known defects are pinned, and the scope decisions with their reasons. Read it
+before touching `src/`. Most of its rules are ESLint-enforced, so a violation fails `npm run
+lint` and CI, not a code review.
+
+[CLAUDE.md](CLAUDE.md) is a one-paragraph pointer to it — the filename Claude Code looks for.
+The rules are deliberately not duplicated there; two copies drift the moment one is edited.
+
 ## Known defects, pinned as expected failures
 
 The shop lets an **empty cart proceed to checkout** — clicking Checkout goes straight to the
@@ -61,3 +71,15 @@ customer form, and navigating to `/checkout-step-two.html` renders an order tota
 Together with the three `error_user` / `problem_user` defects above, this is pinned by a test
 marked `test.fail()`: it passes today by failing, and flips to an _unexpected pass_ — a red
 build — the day the bug is fixed. The reason string on each carries the defect description.
+
+## Continuous integration
+
+One GitHub Actions workflow, [ci.yml](.github/workflows/ci.yml), runs on every push to `main`,
+every pull request, and on demand. It installs Node from `.nvmrc`, then typecheck → lint →
+format check → the Chromium suite, in that order so cheap failures stop the run before the
+browser starts. The HTML report is uploaded as an artifact and kept for seven days.
+
+In CI the suite retries a failed test once, records a trace on that retry, and runs two workers
+(`playwright.config.ts` branches on `CI`). Credentials are read from repository secrets when set
+and fall back to SauceDemo's published demo logins when not — the workflow is green with no
+secrets configured. A second push to the same branch cancels the run in progress.
